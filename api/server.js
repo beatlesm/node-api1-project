@@ -38,6 +38,17 @@ server.post('/api/users', async (req, res) => {
     }
   })
 
+// [GET] /api/users (R of CRUD, fetch all userss)
+server.get('/api/users', async (req, res) => {
+    try {
+      const users = await USER.find()
+      res.json(users)
+    } catch (err) {
+      res.status(500).json({ message: err.message })
+    }
+  })
+
+
 
 // EXPOSING THE SERVER TO OTHER MODULES
 // export default server 
