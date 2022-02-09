@@ -1,5 +1,7 @@
-const server = require('./api/server');
+const app = require('./api/server')
 
-const port = 9000;
+const { PORT } = require('./secret')
 
-// START YOUR SERVER HERE
+app.listen(PORT, () => {
+    console.log(`listening on ${PORT}`)
+})
