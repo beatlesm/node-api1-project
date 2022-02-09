@@ -84,7 +84,27 @@ server.get('/api/users/:id', async (req, res) => {
     }
   })
 
-
+// [PUT /api/users/:id (U of CRUD, update user with :id using JSON payload)
+server.put('/api/users/:id', async (req, res) => {
+    const { id } = req.params
+    const { name, bio } = req.body
+    console.log(id, name, bio)
+    try {
+      
+      const updatedUser = await USER.update(id, { name, bio })
+      if (!updatedUser ) {
+        res.status(404).json({ message: "The user information could not be modified" })
+      } else  {
+        if (!name || !bio ) {
+        res.status(400).json({ message: "Please provide name and bio for the user" })    
+        } else {
+            res.json(updatedUser)
+        }        
+      }
+    } catch (err) {
+      res.status(500).json({ message: err.message })
+    }
+  })
 
 // EXPOSING THE SERVER TO OTHER MODULES
 // export default server 
