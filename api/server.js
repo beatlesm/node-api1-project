@@ -48,7 +48,29 @@ server.get('/api/users', async (req, res) => {
     }
   })
 
+// [GET] /api/users/:id (R of CRUD, fetch user by :id)
+server.get('/api/users/:id', async (req, res) => {
+    console.log(req.method)
+    console.log(req.headers)
+    console.log(req.body)
+    console.log(req.params)
+    try {
+        const { id } = req.params
+        const user = await USER.findById(id)
+        if (!user) {
+          res.status(404).json({ message: "The user with the specified ID does not exist" })
+        } else {
+          res.status(200).json(user)
+        }
+      } catch (err) {
+        // if promise were to reject
+        // or if another thing crashed inside the try
+        // then we fall through here
+        res.status(500).json({ message: err.message })
+      }    
+  })
 
+  
 
 // EXPOSING THE SERVER TO OTHER MODULES
 // export default server 
